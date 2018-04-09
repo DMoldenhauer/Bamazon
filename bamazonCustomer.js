@@ -104,7 +104,7 @@ function processOrder(res) {
             var orderProduct = res[item_id - 1].product_name;
             var orderQuantity = answers.quantity;
             var inStockQuantity = res[item_id - 1].stock_quantity;
-            var newStockQuantity = inStockQuantity - orderQuantity
+            var newStockQuantity = inStockQuantity - orderQuantity;
             var price = res[item_id - 1].price;
             var total = price * orderQuantity;
             // var updatedQuantity = 
@@ -133,7 +133,7 @@ function processOrder(res) {
             else
                 console.log("Sorry, there is insufficient stock to complete your order.");
             
-                connection.end()
+                connection.end();
         });
 
 };
