@@ -4,14 +4,14 @@
 
 
 // List a set of menu options:
-// View Products for Sale
-// View Low Inventory
-// Add to Inventory
-// Add New Product
-// If a manager selects View Products for Sale, the app should list every available item: the item IDs, names, prices, and quantities.
-// If a manager selects View Low Inventory, then it should list all items with an inventory count lower than five.
-// If a manager selects Add to Inventory, your app should display a prompt that will let the manager "add more" of any item currently in the store.
-// If a manager selects Add New Product, it should allow the manager to add a completely new product to the store.
+//  View Products for Sale
+//  View Low Inventory
+//  Add to Inventory
+//  Add New Product
+//  If a manager selects View Products for Sale, the app should list every available item: the item IDs, names, prices, and quantities.
+//  If a manager selects View Low Inventory, then it should list all items with an inventory count lower than five.
+//  If a manager selects Add to Inventory, your app should display a prompt that will let the manager "add more" of any item currently in the store.
+//  If a manager selects Add New Product, it should allow the manager to add a completely new product to the store.
 
 //PSEUDO CODE
 //--------------------------------------------------------------------------
@@ -22,7 +22,8 @@
 //      calls managerMenu function
 
 //  managerMenu function
-//      execute switch case function on start to display manager menu, record input //      and call the following functions based on input:
+//      execute switch case function to display manager menu, record input 
+//      and call the following functions based on input:
 //          viewProducts
 //          viewLowInventory
 //          addToInventory
@@ -37,8 +38,6 @@
 //  addNewProduct
 //      asks manager for all table column values for a new product
 //      adds new product to table
-
-
 
 
 //MAIN PROCESS
@@ -68,21 +67,20 @@ connection.connect(function (err) {
     if (err) throw err;
     //Testing
     // console.log("connected as id " + connection.threadId);
-
+    
     queryProducts();
 });
 
 //Functions 
 //-------------------------------------------------------------------
 
-//  managerMenu function
-//      execute switch statement on start to display manager menu, record input //      and call the following functions based on input:
+function managerMenu(res) {
+//      execute switch statement on start to display manager menu, record input 
+//      and call the following functions based on input:
 //          viewProducts
 //          viewLowInventory
 //          addToInventory
 //          addNewProduct
-function managerMenu(res) {
-
     inquirer.prompt
         ([
             {
@@ -108,12 +106,12 @@ function managerMenu(res) {
                     break;
 
                 case "Add to Inventory":
-                    console.log("calling addToInventory");
+                    // console.log("calling addToInventory");
                     addToInventory(res);
                     break;
 
                 case "Add New Product":
-                    console.log("calling addNewProduct");
+                    // console.log("calling addNewProduct");
                     addNewProduct();
                     break;
 
@@ -127,12 +125,11 @@ function managerMenu(res) {
 }
 
 
-
+function queryProducts() {
 //  function to query database 
 //      builds table for viewProducts() to use
 //      builds lowInventory table for viewLowInventory() to use
 //      calls managerMenu function
-function queryProducts() {
 
     //queries entire product table for later use
     connection.query("SELECT * FROM products", function (err, res) {
@@ -150,6 +147,7 @@ function queryProducts() {
         managerMenu(res);
     });
 }
+
 function queryLowProducts() {
     //queries product table with stock_quantity below 5 for later use
     connection.query("SELECT * FROM products WHERE stock_quantity < 5", function (err, res) {
@@ -168,12 +166,11 @@ function queryLowProducts() {
     });
 
 };
-//  addToInventory function
-//      asks manager which product to add inventory to
-//      updates table quantity column for selected products
+
 
 function addToInventory(res) {
-
+//      asks manager which product to add inventory to
+//      updates table quantity column for selected products
     inquirer.prompt
         ([
             {
@@ -206,16 +203,14 @@ function addToInventory(res) {
 
             console.log("\nStock Quantity for item id " + item_id + " has been increased to " + newStockQuantity);
 
-
         });
 };
 
-//  addNewProduct
+
+
+function addNewProduct() {
 //      asks manager for all table column values for a new product
 //      adds new product to table
-
-function addNewProduct() 
-{
 
     inquirer.prompt
         ([
@@ -241,8 +236,7 @@ function addNewProduct()
             }
 
             // .then function to record answers
-        ]).then(function (answers) 
-        {
+        ]).then(function (answers) {
             var productName = answers.product_name;
             var departmentName = answers.department_name;
             var price = parseFloat(answers.price);
@@ -253,18 +247,18 @@ function addNewProduct()
             // console.log("Price of the product is: " + price);
             // console.log("Stock to add is:  " + stockQuantity);
 
-            connection.query('INSERT INTO products SET ?', 
-            {
-                product_name: productName,
-                department_name: departmentName,
-                price: price,
-                stock_quantity: stockQuantity
-            }
+            connection.query('INSERT INTO products SET ?',
+                {
+                    product_name: productName,
+                    department_name: departmentName,
+                    price: price,
+                    stock_quantity: stockQuantity
+                }
 
             );
 
             //Testing
-            console.log("connection.query ran");
+            // console.log("connection.query ran");
 
             console.log("\nA new product named " + productName + " has been added with the following:  ");
             console.log("\rDepartment:  " + departmentName);

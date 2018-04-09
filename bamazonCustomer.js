@@ -66,10 +66,9 @@ connection.connect(function (err) {
 //Functions 
 //-------------------------------------------------------------------
 
-
-// function with for loop to create object of table passed back
-// console log products object for customer to see
 function queryProducts() {
+    // function with for loop to create object of table passed back
+    // console log products object for customer to see
     connection.query("SELECT * FROM products", function (err, res) {
         //formats table using cli-table npm package
         var table = new Table({
@@ -87,8 +86,8 @@ function queryProducts() {
     });
 }
 
-// use inquirer function to prompt the user with two questions and record answers
 function processOrder(res) {
+    // use inquirer function to prompt the user with two questions and record answers
     inquirer.prompt
         ([
             {
